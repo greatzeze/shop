@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+{include file="public/head" }
+</head>
+<body>
+{include file="public/header"}
+<div id="content">
+	<div class="container">
+		<div class="line-big">
+	</div>
+			<div class="x12">
+				<div id="current_location">当前位置：<a href="index.php">首页</a> > {$current_location}</div>
+					
+						<input id="id" type="text" class="hidden" value="{ $product['id']; }" >
+					<div class="product">
+						<!-- 商品详情图 -->
+						<div class="x6">
+							{if($product.slideshow != '')}
+								<div id="detail_slideshow">
+									<script>$(function(){$('#detail_slideshow').slide({trigger : 'click',effect : 'fade'});	});</script>
+									<ul class="bd">
+									<?php $arr_slideshow = explode('|',$product['slideshow']); ?>
+										{foreach($arr_slideshow as $v)}
+											<li><img src="{$v}"></li>
+										{/foreach}
+									</ul>
+									<ul class="hd line-small">
+										{foreach($arr_slideshow as $v)}
+											<li class="x2"><img src="{$v}"></li>
+										{/foreach}
+									</ul>
+								</div>
+							{/if}
+						</div>
+						<!-- 商品简介 -->
+						<div class="x6">
+							<h1 id="detail_name">{$product['name'] }</h1>
+							<p>发布日期：{$product['date']} </p>
+							<p>好评率：{$product['score']; }%</p>
+							<p>价格：￥{$product['price']; }元/{$product['unit']; }</p>
+							<p>产地：{$product['area']; }</p>
+							<p>快递地区：{$product['deliver_area']; }</p>
+							<p>选择购买数量：<input type="number" name="count" id="count" value="1" min="1" max="{ $product['allcount'];}">{$product['unit']; }</p>
+							<div style="height:40px;">总额：
+								<h3 style="display:inline;">￥<span id="pay" class="text-danger">{$product['price']; }</span></h3>
+							</div>
+							<p>
+							<button class="btn btn-success j-add">加入购物车</button>
+							<button class="hidden" id="addBtn" data-toggle="modal" data-target="#myModal" ></button>
+							<button class="btn btn-danger" data-toggle="modal" data-target="#mypay"> 马上购买</button>
+							</p>
+						</div>
+					</div>
+					<div class="product">
+							<div id="detail_intro" class="quote">{$product['content']; } </div>
+					</div>
+		
+			</div>
+		</div>
+	</div>
+</div>
+
+{include file="public/footer"}
+<!-- 加进购物车-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">加入成功~</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form form-auto">
+				已将宝贝添加进您的购物车，是否立即前往支付？	
+        </div>
+      </div>
+      <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">再挑选几件</button>
+        <a href="mybucket.php" class="btn btn-success">走，去支付</a>
+      </div>
+    </div>
+	</div>
+<!-- 立刻支付 -->
+<div class="modal fade" id="mypay" tabindex="-1" role="dialog" aria-labelledby="mypay">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="mypay">提示</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form form-auto">
+				确认支付了吗
+        </div>
+      </div>
+      <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">容我再想想~</button>
+        <a href="mybucket.php" class="btn btn-success">确认了</a>
+      </div>
+    </div>
+	</div>
+
+<script>
+
+
+$(function(){
+	var price = '{ $price; }',
+			pay = '';
+	$('#count').change(function(){
+		console.log($(this).val());
+		var pay = $(this).val()*price;
+		$('#pay').text(pay);
+	});
+	$('.j-add').click(function(){
+		var count = $('#count').val(),
+				 id = '{ $d_id;}',
+				 product_name = '{ $d_name;}',
+				 pay = $('#pay').text(),
+				 unit = '{ $unit; }';
+
+				$.ajax({
+					url:'logic/addBucket.php',
+					type:'post',
+					data:{
+						'id':id,'count':count,'product_name':product_name,'pay':pay,'unit':unit
+					},
+					dataType:'json',
+					success:function(data){
+						if(data.flag){
+								$('#addBtn').trigger('click');
+						}else{
+							alert(data.message);
+						}
+					}
+			})
+	})
+})
+</script>
+</body>
+
+</html>

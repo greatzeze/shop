@@ -1,0 +1,53 @@
+<?php
+if(empty($_SESSION['name'])){
+    echo "<script>alert('您尚未登录，请先登录~');window.location.href='/login';</script>";
+}
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+{include file="public/head" }
+</head>
+<body>
+{include file="public/header"}
+<div id="content">
+	<div class="container">
+		<div class="line-big">
+			<div class="x3">
+				<div class="hd1">
+					<!-- <?php //echo (($c_ifsub == 1) ? $c_name : $cp_name);?> <span><?php //echo (($c_ifsub == 1) ? $c_aname : $cp_aname);?> -->
+				</div>
+				<div class="bd1">
+					<ul class="channel_list">
+						<!-- <?php //echo $channel_list?> -->
+					</ul>
+				</div>
+			</div>
+			<div class="x9">
+				<div id="current_location">当前位置：<a href="index.php">首页</a> > <?php //echo $current_location?>	</div>
+				
+				<div class="line-big plist">
+					{foreach $productList as $v}
+					<div class="x3">
+						<div class="wrap mb20">
+							<a href="{$v.id}" target="_blank"><img src="{$v.d_picture}" title="{$v.d_name}" alt="{$v.d_name}"/></a>
+							<div class="title">
+								<a href="{$v.id}" target="_blank" title="{$v.d_name}">
+								{$v.d_name}
+							</a>
+							<div style="height:50px;line-height:50px;">
+								<span class="text-muted">￥12/斤</span>
+							</div>
+						</div>
+						</div>
+					</div>
+					{/foreach}
+				</div>
+				<div class="page_show"><?php //echo (($system_mode == 2 ) ? page_shows($pager[2],$pager[3],$page,2) : page_show($pager[2],$pager[3],$pager[4],2));?> </div>
+			</div>
+		</div>
+	</div>
+</div>
+{include file="public/footer"}
+</body>
+</html>

@@ -1,0 +1,77 @@
+<div id="top-menu">
+	<div class="container">
+		<div class="line">
+			{if(empty($_SESSION['name']))}
+			<a href="login"><span class="icon-user"> 登录</span></a>　
+			<a href="register"><span class="icon-star"> 注册</span></a>
+			{else}
+			欢迎 <a href="/channel/5">{$_SESSION['name']}</a>
+			<a href="quit">退出登录</a>
+			{/if}
+			<a href="sitemap"><span class="icon-sitemap"> 网站地图</span></a>　		
+		</div>
+	</div>
+</div>
+<div id="header">
+	<div class="container">
+		<div class="line">
+			<div class="x3" id="logo">
+                <a href="{$system.s_domain }"><img src="{$system.s_mlogo}" title="{$system.s_name.'-'.$system.s_seoname; }" alt=""></a>
+            </div>
+			<div class="x9" id="navigation">
+				<ul>
+					<?php $arr = $_SERVER['REQUEST_URI']; ?>
+			
+					{if(strpos($arr,'profile')==true)}
+						<li style="background-color:#00bb00;border-radius:5px;"><a href="profile" style="color:#fff;">我的资料</a></li>
+					{else}
+						<li><a href="profile">我的资料</a></li>
+					{/if}
+
+					{if(strpos($arr,'mylist')==true) }
+						<li style="background-color:#00bb00;border-radius:5px;"><a href="mylist" style="color:#fff;">我的订单</a></li>
+					{else}
+						<li ><a href="mylist">我的订单</a></li>
+					{/if}			
+						
+					{if(strpos($arr,'mybucket')==true)}
+						<li style="background-color:#00bb00;border-radius:5px;"><a href="mybucket" style="color:#fff;">我的购物车</a></li>
+					{else}
+						<li><a href="mybucket">我的购物车</a></li>
+					{/if}
+
+					{if(strpos($arr,'feedback')==true)}
+					<li style="background-color:#00bb00;border-radius:5px;"><a href="feedback" style="color:#fff;">在线交流</a></li>
+					{else}
+					<li><a href="feedback">在线交流</a></li>
+					{/if}
+					{if(strpos($arr,'aution')==true)}
+						<li style="background-color:#00bb00;border-radius:5px;"><a href="aution" style="color:#fff;">拍卖中心</a></li>
+					{else}
+						<li><a href="aution">拍卖中心</a></li>
+					{/if}
+					{foreach $channelList as $row}
+					<li class="main">
+                    <a  href="channel/{$row.id}" target="{$row.c_target}">{$row.c_nname}</a>
+                    </li>
+					{/foreach}
+					<li class="home"><a href="index">首页</a></li>
+				</ul>
+			</div>
+			<div class="fc"></div>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div id="search">
+		热门关键词：
+		<?php $arr_key = explode('|',$system['s_hotkeywords']);?>
+        {foreach($arr_key as  $v)}
+            <a class="badge" href="search?key={$v}">{$v}</a> 
+        {/foreach}
+		<form method="get" action="search">
+			<input id="search_text" type="text" name="key" />
+			<input id="search_btn" type="submit" value="搜索" />
+		</form>
+	</div>
+</div>

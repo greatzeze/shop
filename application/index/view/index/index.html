@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+{include file="public/head" }
+<script type="text/javascript">
+$(function(){$('home a').addClass('current');});
+</script>
+</head>
+<body>
+{include file="public/header"}
+<div id="slideshow">
+	<div class="bd">
+		<ul>
+        {foreach $slideshowList as $v}
+			<li style="background:url('{$v.s_picture}') center no-repeat;">
+				<div class="url">
+					<a href="{$v.s_url}" title="{$v.s_name}"></a>
+				</div>
+			</li>
+        {/foreach}}
+		</ul>
+	</div>
+	<div class="hd">
+		<ul>
+		</ul>
+	</div>
+</div>
+<div id="index_products">
+	<div class="container">
+		<div class="line-big">
+			<div class="x3">
+				<div class="hd1"><?php echo get_channel(3,'c_name');?> <span><?php echo get_channel(3,'c_aname'); ?></span></div>
+				<div class="bd1">
+					<div class="channel_list">
+						<?php echo channel_list(3,3); ?>
+					</div>
+				</div>
+			</div>
+			<div class="x9">
+				<div class="l10 plist">
+					{foreach $productList as $v}
+					<div class="x3">
+						<div class="wrap mb10">
+							<a href="/product/{$v.id}" target="_blank"><img src="{$v.picture;}" title="{$v.name;}" alt="{$v.name;}"/></a>
+							<div class="title">
+								<a href="/product/{$v.id}" target="_blank" title="{$v.name;}">
+								{$v.name}
+								</a>
+							</div>
+						</div>
+					</div>
+					{/foreach}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div id="link">
+	<div class="container">
+		<div class="hd1">友情链接</div>
+		<div class="bd1">
+			
+			<div class="link_text">
+				<div class="l10">
+					{foreach $linkList as $v}
+					<div class="a8"><a href="{$v.l_url}" target="_blank">{$v.l_name}</a></div>
+					{/foreach}
+				</div>
+			</div>
+			
+			<div class="link_picture">
+				<div class="l10">
+					{foreach $linkList as $v}
+					<div class="a8"><a href="{$v.l_url}" target="_blank"><img src="{$v.l_picture}" alt="{$v.l_name}" title="{$v.l_name}"></a></div>
+					{/foreach}
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+{include file="public/footer"}
+</body>
+</html>
